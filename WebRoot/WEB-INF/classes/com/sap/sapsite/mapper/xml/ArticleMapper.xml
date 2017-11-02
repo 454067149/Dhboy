@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sap.sapsite.mapper.ArticleMapper">
+	<!-- 根据栏目获取文章 -->
+	<select id="findArticleByColumn" parameterType="Integer" resultType="Article" >
+		SELECT * FROM articles WHERE c_id = #{column}
+	</select>
+	
+	<!-- 前台关于我们获取数据库前三条数据 -->
+	<select id="findArticleByAboutUs" resultType="Article">
+		SELECT * FROM articles WHERE c_id = 1 limit 3;
+	</select>
+	
+	<!-- 前台新闻资讯获取数据库前四条数据 -->
+	<select id="findArticleByNews" resultType="Article">
+		SELECT * FROM articles WHERE c_id in (2,3) limit 4;
+	</select>
+	
+	<!-- 添加文章 -->
+	<insert id="addArticle" parameterType="Article">
+		INSERT INTO articles(img,title,name,paper,editor1,c_id,u_id,date) VALUES(#{img},#{title},#{name},#{paper},#{editor1},#{c_id},#{u_id},#{date});
+	</insert>
+	
+	<!-- 后台获取所有文章 -->
+	<select id="findArticleList" parameterType="Integer" resultType="Article" >
+		SELECT * FROM articles ORDER BY date DESC;
+	</select>
+	
+	<!-- 后台根据id删除文章 -->
+	<delete id="deleteArticle" parameterType="Integer">
+		DELETE FROM articles WHERE id = #{id};
+	</delete>
+	
+	<!-- 根据ID获取文章 -->
+	<select id="selectArticleById" parameterType="Integer" resultType="Article" >
+		SELECT * FROM articles WHERE id = #{id};
+	</select>
+	
+	<!-- 后台修改文章 -->
+	<update id="updateArticle" parameterType="Article">
+		UPDATE articles SET 
+		img=#{img},title=#{title},name=#{name},paper=#{paper},editor1=#{editor1},c_id=#{c_id},u_id=#{u_id},date=#{date} 
+		WHERE id = #{id};
+	</update>
+	
+	<!-- 后台获取文章栏目 -->
+	<select id="findArticleColumn" resultType="Column" >
+		SELECT * FROM columns;
+	</select>
+</mapper>

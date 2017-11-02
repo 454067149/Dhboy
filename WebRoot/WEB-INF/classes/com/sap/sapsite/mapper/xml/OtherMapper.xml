@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sap.sapsite.mapper.OtherMapper">
+	
+	<!-- 获取全部banner信息  -->
+	<select id="findBannerList" resultType="Banner">
+		SELECT * FROM banners;
+	</select>
+	
+	<!-- 获取单个banner信息  -->
+	<select id="findBanner" parameterType="Banner" resultType="Banner">
+		SELECT * FROM banners
+		<where>
+			<if test="id!=null">id = #{id}</if>
+		</where>;
+	</select>
+	
+	<!-- 修改Banner幻灯 -->
+	<update id="updateBannerById" parameterType="Banner">
+		UPDATE banners SET 
+		img=#{img},title=#{title},p=#{p},url=#{url}
+		WHERE id = #{id};	
+	</update>
+</mapper>

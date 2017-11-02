@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sap.sapsite.mapper.MessageMapper">
+	<!-- 添加评论文章 -->
+	<insert id="addMessage" parameterType="Message">
+		INSERT INTO messages(name,phone,content,audit) VALUES(#{name},#{phone},#{content},0);
+	</insert>
+	
+	<!-- 后台留言列表 -->
+	<select id="findMessageList" parameterType="Message" resultType="Message">
+		SELECT * FROM messages 
+		<where>
+			<if test="audit!=null">audit = #{audit}</if>
+		</where>ORDER BY audit asc,id desc
+	</select>
+	
+	<!-- 后台删除留言 -->
+	<delete id="deleteMessage" parameterType="Integer">
+		DELETE FROM messages WHERE id = #{id};
+	</delete>
+	
+	<!-- 后台审核留言 -->
+	<update id="updateMessage" parameterType="Integer">
+		UPDATE messages SET audit = 1 WHERE id = #{id};
+	</update>
+	
+</mapper>
